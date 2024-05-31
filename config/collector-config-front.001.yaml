@@ -1,0 +1,28 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:5555
+      http:
+        endpoint: 0.0.0.0:5556
+
+exporters:
+  logging:
+    verbosity: detailed
+
+service:
+  telemetry:
+    metrics:
+      address: localhost:8887
+  pipelines:
+    metrics:
+      receivers: [otlp]
+#      processors: []
+      exporters: [logging]
+#    traces:
+#      receivers: [otlp]
+#      processors: [batch]
+#      exporters: [otlp]
+#    logs:
+#      receivers: [otlp]
+#      exporters: [logging]

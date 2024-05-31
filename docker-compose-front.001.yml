@@ -1,0 +1,14 @@
+version: '3.4'
+services:
+
+  collector:
+    image: otelcollector:0.93.0-dev
+    command: ["sh", "-c", "/app/otelcorecol --config=/etc/collector-config.yaml --feature-gates=-pkg.translator.prometheus.NormalizeName"]
+    # debug
+#    command: ["sh", "-c", "/app/dlv --listen=:42112 --headless=true --api-version=2 --accept-multiclient exec --continue /app/otelcorecol -- --config=/etc/collector-config.yaml --feature-gates=-pkg.translator.prometheus.NormalizeName"]
+    volumes:
+      - ./config/collector-config-front.001.yaml:/etc/collector-config.yaml
+    ports:
+      - 5555:5555 # gRPC
+      - 5556:5556 # HTTP
+#      - 42112:42112 # debug
